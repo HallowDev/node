@@ -14,9 +14,30 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Wood.init({
-    name: DataTypes.STRING,
-    type: DataTypes.ENUM,
-    hardness: DataTypes.ENUM
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        notNull: { msg: "Name is required" },
+      },
+    },
+    type: {
+      type: DataTypes.ENUM('softwood', 'hardwood'),
+      allowNull: false
+    },
+    hardness: {
+      type: DataTypes.ENUM('soft', 'medium', 'hard'),
+      allowNull: false
+    },
+    createdAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    },
+    updatedAt: {
+      allowNull: false,
+      type: DataTypes.DATE
+    }
   }, {
     sequelize,
     modelName: 'Wood',
