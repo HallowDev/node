@@ -6,8 +6,7 @@ exports.signup = (req, res) => {
     try {
         bcrypt.genSalt(saltRounds, function(err, salt) {
             bcrypt.hash(req.body.password, salt, async function(err, hash) {
-                req.body.password = hash
-                const newUser = await User.create({ ...req.body });
+                const newUser = await User.create({ ...req.body, password: hash });
                 res.status(201).json(newUser);
             });
         });
