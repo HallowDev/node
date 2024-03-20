@@ -1,8 +1,8 @@
-const express = require('express');
-const router = express.Router();
+const express = require("express");
+const router = express();
+const userCtrl = require("../controllers/wood.js");
 
-router.get('/', function (req, res) {
-  res.send('List of woods');
-});
+router.get("/", userCtrl.woods);
+//...
 
 module.exports = router;
