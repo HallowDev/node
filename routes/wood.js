@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express();
-const userCtrl = require("../controllers/wood.js");
+const woodCtrl = require("../controllers/wood.js");
 
-router.get("/", userCtrl.woods);
+router.get("/", woodCtrl.woods);
+router.get("/:hardness", woodCtrl.readByHardness);
 //...
 
 module.exports = router;
