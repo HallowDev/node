@@ -21,13 +21,13 @@ exports.signup = (req, res) => {
 exports.login = async (req, res) => {
     const user = await User.findOne({ where: { email: req.body.email} });
     if (user === null) {
-        res.status(500).json({ message: 'Une erreur est survenue lors de la connexion' });
+        res.status(404).json({ message: 'Une erreur est survenue lors de la connexion' });
     } else {
         bcrypt.compare(req.body.password, user.password, function(err, result) {
             if (result === true) {
                 res.status(200).json({user, token: token});
             } else {
-                res.status(500).json({ message: 'Le mot de passe est incorrect' });
+                res.status(401).json({ message: 'Le mot de passe est incorrect' });
             }
         });
     }
