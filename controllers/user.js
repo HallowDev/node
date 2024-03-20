@@ -1,6 +1,8 @@
 const { User } = require("../models");
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
+var jwt = require('jsonwebtoken');
+var token = jwt.sign({ foo: 'bar' }, 'shhhhh');
 
 exports.signup = (req, res) => {
     try {
@@ -16,6 +18,17 @@ exports.signup = (req, res) => {
       }
 }
 
-exports.login = (req, res) => {
-    res.send('You are login');
+exports.login = async (req, res) => {
+    const user = await User.findOne({ where: { email: req.body.email} });
+    if (user === null) {
+        res.status(500).json({ message: 'Une erreur est survenue lors de la connexion' });
+    } else {
+        bcrypt.compare(req.body.password, user.password, function(err, result) {
+            if (result === true) {
+                res.status(200).json({user, token: token});
+            } else {
+                res.status(500).json({ message: 'Le mot de passe est incorrect' });
+            }
+        });
+    }
 }
