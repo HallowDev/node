@@ -23,11 +23,11 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     type: {
-      type: DataTypes.ENUM('softwood', 'hardwood'),
+      type: DataTypes.ENUM('softwood', "exotic wood", 'noble and hardwood'),
       allowNull: false
     },
     hardness: {
-      type: DataTypes.ENUM('soft', 'medium', 'hard'),
+      type: DataTypes.ENUM('soft', 'medium-hard', 'hard'),
       allowNull: false
     },
     createdAt: {

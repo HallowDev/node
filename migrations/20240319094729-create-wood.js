@@ -14,10 +14,10 @@ module.exports = {
         allowNull: false,
       },
       type: {
-        type: Sequelize.ENUM('softwood', 'exotic wood', 'noble and hardwoods')
+        type: Sequelize.ENUM('softwood', 'exotic wood', 'noble and hardwood')
       },
       hardness: {
-        type: Sequelize.ENUM('tender', 'medium-hard', 'hard')
+        type: Sequelize.ENUM('soft', 'medium-hard', 'hard')
       },
       createdAt: {
         allowNull: false,
