@@ -1,5 +1,4 @@
 const { Wood } = require("../models");
-const pathname = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
 
 exports.woods = async (req, res) => {
     try {
@@ -21,6 +20,7 @@ exports.readByHardness = async (req, res) => {
 }
 
 exports.addWood = async (req, res) => {
+    const pathname = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
     try {
         const newWood = await Wood.create({ ...JSON.parse(req.body.datas), image: pathname, });
         res.status(200).json(newWood);
