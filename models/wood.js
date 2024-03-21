@@ -37,6 +37,10 @@ module.exports = (sequelize, DataTypes) => {
     updatedAt: {
       allowNull: false,
       type: DataTypes.DATE
+    },
+    image: {
+      allowNull: true,
+      type: DataTypes.STRING
     }
   }, {
     sequelize,

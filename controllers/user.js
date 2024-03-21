@@ -2,7 +2,7 @@ const { User } = require("../models");
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 var jwt = require('jsonwebtoken');
-var token = jwt.sign({ foo: 'bar' }, 'shhhhh');
+var token = jwt.sign({ foo: 'bar', "alg": "HS256" }, 'shhhhh');
 
 exports.signup = (req, res) => {
     try {

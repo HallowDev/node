@@ -1,4 +1,5 @@
 const { Wood } = require("../models");
+const pathname = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
 
 exports.woods = async (req, res) => {
     try {
@@ -18,3 +19,12 @@ exports.readByHardness = async (req, res) => {
         res.status(500).json({ message: 'Une erreur est survenue lors de la récupération de la liste' });
     }
 }
+
+exports.addWood = async (req, res) => {
+    try {
+        const newWood = await Wood.create({ ...JSON.parse(req.body.datas), image: pathname, });
+        res.status(200).json(newWood);
+    } catch (error) {
+        res.status(500).json({ message: 'Une erreur est survenue lors de la création de la nouvelle essence de bois.' });
+    }
+};
