@@ -20,10 +20,10 @@ exports.readByHardness = async (req, res) => {
 }
 
 exports.addWood = async (req, res) => {
-    const pathname = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
     try {
+        const pathname = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
         const newWood = await Wood.create({ ...JSON.parse(req.body.datas), image: pathname, });
-        res.status(200).json(newWood);
+        res.status(201).json(newWood);
     } catch (error) {
         res.status(500).json({ message: 'Une erreur est survenue lors de la création de la nouvelle essence de bois.' });
     }
