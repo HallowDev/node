@@ -1,4 +1,5 @@
 const { Wood } = require("../models");
+const fs = require('fs');
 
 exports.woods = async (req, res) => {
     try {
@@ -34,17 +35,24 @@ exports.updateWood = async (req, res) => {
         const pathname = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
         const woodId = req.params.id;
         const updatedWoodData = JSON.parse(req.body.datas);
-        const woodToUpdate = await Wood.findOne({ id : woodId });
+        const woodToUpdate = await Wood.findByPk(woodId);
 
         if (!woodToUpdate) {
             return res.status(404).json({ message: 'Essence de bois non trouvée.' });
         }
 
-        const updatedWood = await woodToUpdate.update({
-            ...updatedWoodData,
-            image: req.file ? pathname : woodToUpdate.image
-        });
-        res.status(200).json(updatedWood);
+        if (req.file) {
+            const oldImagePath = woodToUpdate.image.split('/uploads/')[1];
+            fs.unlink(`./uploads/${oldImagePath}`, (err) => {
+                if (err) {
+                    return res.status(401).json({ message: 'Erreur lors de la suppression de l\'ancienne image :', err });
+                }
+            });
+            updatedWoodData.image = pathname;
+            const updatedWood = await woodToUpdate.update(updatedWoodData);
+            res.status(200).json(updatedWood);
+        }
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: 'Une erreur est survenue lors de la mise à jour de l\'essence de bois.' });
