@@ -43,7 +43,7 @@ exports.updateWood = async (req, res) => {
         if (req.file) {
             const pathname = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
             if (woodToUpdate.image) {
-                deleteImage(woodToUpdate.image)
+                await deleteImage(woodToUpdate.image)
             }
             updatedWoodData.image = pathname;
         }
@@ -67,7 +67,7 @@ exports.deleteWood = async (req, res) => {
         }
 
         if (woodToDelete.image) {
-            deleteImage(woodToDelete.image)
+            await deleteImage(woodToDelete.image)
         }
 
         await woodToDelete.destroy();
