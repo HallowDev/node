@@ -6,8 +6,9 @@ const multer = require('../middleware/multer.js')
 
 router.get("/", auth, woodCtrl.woods)
 router.get("/:hardness", auth, woodCtrl.readByHardness);
-router.post("/", auth, multer, woodCtrl.addWood)
+router.post("/add", auth, multer, woodCtrl.addWood)
 router.put("/:id", auth, multer, woodCtrl.updateWood);
+router.delete("/delete/:id", auth, multer, woodCtrl.deleteWood)
 
 //...
 
