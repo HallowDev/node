@@ -1,5 +1,5 @@
 const { Wood } = require("../models");
-const fs = require('fs');
+const { deleteImage } = require("../helpers/images.js");
 
 exports.woods = async (req, res) => {
     try {
@@ -78,12 +78,3 @@ exports.deleteWood = async (req, res) => {
         res.status(500).json({ message: 'Une erreur est survenue lors de la suppression de l\'essence de bois.' });
     }
 };
-
-deleteImage = (image) => {
-    const oldImagePath = image.split('/uploads/')[1];
-    fs.unlink(`./uploads/${oldImagePath}`, (err) => {
-        if (err) {
-            return res.status(401).json({ message: 'Erreur lors de la suppression de l\'image :', err });
-        }
-    });
-}
