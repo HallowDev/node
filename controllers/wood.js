@@ -43,12 +43,7 @@ exports.updateWood = async (req, res) => {
         if (req.file) {
             const pathname = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
             if (woodToUpdate.image) {
-                const oldImagePath = woodToUpdate.image.split('/uploads/')[1];
-                fs.unlink(`./uploads/${oldImagePath}`, (err) => {
-                    if (err) {
-                        return res.status(401).json({ message: 'Erreur lors de la suppression de l\'ancienne image :', err });
-                    }
-                });
+                deleteImage(woodToUpdate.image)
             }
             updatedWoodData.image = pathname;
         }
@@ -72,12 +67,7 @@ exports.deleteWood = async (req, res) => {
         }
 
         if (woodToDelete.image) {
-            const oldImagePath = woodToDelete.image.split('/uploads/')[1];
-            fs.unlink(`./uploads/${oldImagePath}`, (err) => {
-                if (err) {
-                    return res.status(401).json({ message: 'Erreur lors de la suppression de l\'image associée :', err });
-                }
-            });
+            deleteImage(woodToDelete.image)
         }
 
         await woodToDelete.destroy();
@@ -88,3 +78,12 @@ exports.deleteWood = async (req, res) => {
         res.status(500).json({ message: 'Une erreur est survenue lors de la suppression de l\'essence de bois.' });
     }
 };
+
+deleteImage = (image) => {
+    const oldImagePath = image.split('/uploads/')[1];
+    fs.unlink(`./uploads/${oldImagePath}`, (err) => {
+        if (err) {
+            return res.status(401).json({ message: 'Erreur lors de la suppression de l\'image :', err });
+        }
+    });
+}
